@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MonthSelector from './MonthSelector';
 import FilterBar from './FilterBar';
+import dayjs from 'dayjs'; // For date manipulation
 
 // Shift details mapping with emojis
 const shiftDetails = {
-    1: { name: 'Morning', time: '7 AM - 4 PM', emoji: '🌅' }, // Sunrise emoji for Morning
-    2: { name: 'Afternoon', time: '10 AM - 7 PM', emoji: '🌞' }, // Sun emoji for Afternoon
-    3: { name: 'Evening', time: '1 PM - 10 PM', emoji: '🌇' }, // Sunset emoji for Evening
-    4: { name: 'Night', time: '10 PM - 7 AM', emoji: '🌙' }, // Moon emoji for Night
+    1: { name: 'Morning', time: '7 AM - 4 PM', emoji: '🌅' },
+    2: { name: 'Afternoon', time: '10 AM - 7 PM', emoji: '🌞' },
+    3: { name: 'Evening', time: '1 PM - 10 PM', emoji: '🌇' },
+    4: { name: 'Night', time: '10 PM - 7 AM', emoji: '🌙' },
 };
 
-const data = [
+const initialData = [
     {
         name: 'Aditya',
         position: 'L1',
         shiftNumber: 1,
-        date: '8/7/2024',
+        date: '8/7/1982',
         email: 'aditya@example.com',
     },
     {
@@ -37,11 +38,66 @@ const data = [
         position: 'L1',
         shiftNumber: 3,
         date: '8/7/2024',
-        email: 'shewtam@example.com',
+        email: 'samarth@example.com',
     },
 ];
 
 const Table = () => {
+    const [data, setData] = useState(initialData);
+    const [freshers, setFreshers] = useState([]);
+    const [seniors, setSeniors] = useState([]);
+    const [currentMonthShifts, setCurrentMonthShifts] = useState({});
+
+    const determineTenure = () => {
+        const currentDate = dayjs();
+        const thresholdDate = currentDate.subtract(6, 'months');
+
+        const fresherList = [];
+        const seniorList = [];
+        const currentMonthShifts = {};
+
+        initialData.forEach(item => {
+            const employeeDate = dayjs(item.date, 'M/D/YYYY');
+            if (employeeDate.isAfter(thresholdDate)) {
+                fresherList.push(item.name);
+            } else {
+                seniorList.push(item.name);
+            }
+
+            if (dayjs(item.date).isSame(currentDate, 'month')) {
+                currentMonthShifts[item.name] = item.shiftNumber;
+            }
+        });
+
+        setFreshers(fresherList);
+        setSeniors(seniorList);
+        setCurrentMonthShifts(currentMonthShifts);
+    };
+
+    const generateNextMonthShifts = () => {
+        determineTenure();
+
+        const newShifts = initialData.map(item => {
+            let newShiftNumber = item.shiftNumber;
+
+            // Switch shifts: shift 3 to shift 4 and shift 4 to shift 3
+            if (item.shiftNumber === 3) {
+                newShiftNumber = 4;
+            } else if (item.shiftNumber === 4) {
+                newShiftNumber = 3;
+            }
+
+            // If it's a fresher and the person didn't have a night shift this month, assign them a night shift
+            if (freshers.includes(item.name) && currentMonthShifts[item.name] !== 4) {
+                newShiftNumber = 4;
+            }
+
+            return { ...item, shiftNumber: newShiftNumber };
+        });
+
+        setData(newShifts);
+    };
+
     return (
         <div>
             <MonthSelector />
@@ -64,7 +120,6 @@ const Table = () => {
                                     <tr key={index} className="text-gray-700">
                                         <td className="px-4 py-3 border">
                                             <div className="flex items-center text-sm">
-
                                                 <div>
                                                     <p className="font-semibold text-black">{item.name}</p>
                                                 </div>
@@ -94,10 +149,30 @@ const Table = () => {
                     </div>
                 </div>
                 <button
-                    class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none block w-full"
-                    type="button">
+                    className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none block w-full"
+                    type="button"
+                    onClick={generateNextMonthShifts}
+                >
                     Generate Shift for the Next Month
                 </button>
+                <div className="mt-6">
+                    <h3 className="text-lg font-semibold">Freshers</h3>
+                    <ul className="list-disc list-inside">
+                        {freshers.length ? (
+                            freshers.map((name, index) => <li key={index}>{name}</li>)
+                        ) : (
+                            <li>No freshers found</li>
+                        )}
+                    </ul>
+                    <h3 className="mt-4 text-lg font-semibold">Seniors</h3>
+                    <ul className="list-disc list-inside">
+                        {seniors.length ? (
+                            seniors.map((name, index) => <li key={index}>{name}</li>)
+                        ) : (
+                            <li>No seniors found</li>
+                        )}
+                    </ul>
+                </div>
             </section>
         </div>
     );
