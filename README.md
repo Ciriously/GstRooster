@@ -1,8 +1,7 @@
-# React + Vite
+-- add a caolumn what was the shift last month and what will be next month --- NOT
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+-- plugin to fetch data fromn Google sheets
 
-Currently, two official plugins are available:
+-- l2 only 1 for NS and L1 should be 2 folks
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-- L1 and l2 difffereny table
