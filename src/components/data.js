@@ -1,18 +1,11 @@
 // Define the data array
-const data = [
+export const data = [
   {
     name: "Adarsh",
     email: "adarsh@example.com",
     role: "L1",
     status: "Active",
     shift: "Morning",
-  },
-  {
-    name: "Anila",
-    email: "anila@example.com",
-    role: "L2",
-    status: "Inactive",
-    shift: "Evening",
   },
   {
     name: "Anurag",
@@ -24,7 +17,7 @@ const data = [
   {
     name: "Arsalan",
     email: "arsalan@example.com",
-    role: "L2",
+    role: "L1",
     status: "Inactive",
     shift: "Evening",
   },
@@ -38,7 +31,7 @@ const data = [
   {
     name: "Unnati",
     email: "unnati@example.com",
-    role: "L2",
+    role: "L1",
     status: "Inactive",
     shift: "Evening",
   },
@@ -59,7 +52,7 @@ const data = [
   {
     name: "Sumit",
     email: "sumit@example.com",
-    role: "L1",
+    role: "L2",
     status: "Active",
     shift: "Morning",
   },
@@ -94,7 +87,7 @@ const data = [
   {
     name: "Archie",
     email: "archie@example.com",
-    role: "L2",
+    role: "L1",
     status: "Inactive",
     shift: "Evening",
   },
@@ -108,7 +101,7 @@ const data = [
   {
     name: "Neha",
     email: "neha@example.com",
-    role: "L2",
+    role: "L1",
     status: "Inactive",
     shift: "Evening",
   },
@@ -122,7 +115,7 @@ const data = [
   {
     name: "Shubhankar",
     email: "shubhankar@example.com",
-    role: "L2",
+    role: "L1",
     status: "Inactive",
     shift: "Evening",
   },
@@ -136,7 +129,7 @@ const data = [
   {
     name: "Shreya",
     email: "shreya@example.com",
-    role: "L2",
+    role: "L1",
     status: "Inactive",
     shift: "Evening",
   },
@@ -150,7 +143,7 @@ const data = [
   {
     name: "Adish",
     email: "adish@example.com",
-    role: "L2",
+    role: "L1",
     status: "Inactive",
     shift: "Evening",
   },
@@ -164,7 +157,7 @@ const data = [
   {
     name: "Shweta",
     email: "shweta@example.com",
-    role: "L2",
+    role: "L1",
     status: "Inactive",
     shift: "Evening",
   },
