@@ -1,4 +1,4 @@
-// Define the data array
+// Define the data array with joining dates
 export const data = [
   {
     name: "Adarsh",
@@ -6,6 +6,7 @@ export const data = [
     role: "L1",
     shift: "Morning",
     manager: "Anmol",
+    joiningDate: "2023-06-15",
   },
   {
     name: "Anurag",
@@ -13,6 +14,7 @@ export const data = [
     role: "L1",
     shift: "Morning",
     manager: "Imtiyaz",
+    joiningDate: "2023-05-10",
   },
   {
     name: "Arsalan",
@@ -20,6 +22,7 @@ export const data = [
     role: "L1",
     shift: "Evening",
     manager: "Anmol",
+    joiningDate: "2023-08-20",
   },
   {
     name: "Bhavesh",
@@ -27,6 +30,7 @@ export const data = [
     role: "L1",
     shift: "Morning",
     manager: "Imtiyaz",
+    joiningDate: "2023-07-01",
   },
   {
     name: "Unnati",
@@ -34,6 +38,7 @@ export const data = [
     role: "L1",
     shift: "Evening",
     manager: "Anmol",
+    joiningDate: "2023-04-12",
   },
   {
     name: "Kishoree",
@@ -41,6 +46,7 @@ export const data = [
     role: "L2",
     shift: "Morning",
     manager: "Imtiyaz",
+    joiningDate: "2023-03-25",
   },
   {
     name: "Shivani",
@@ -48,6 +54,7 @@ export const data = [
     role: "L2",
     shift: "Evening",
     manager: "Anmol",
+    joiningDate: "2023-02-18",
   },
   {
     name: "Sumit",
@@ -55,6 +62,7 @@ export const data = [
     role: "L2",
     shift: "Morning",
     manager: "Imtiyaz",
+    joiningDate: "2023-07-15",
   },
   {
     name: "Tuaha",
@@ -62,6 +70,7 @@ export const data = [
     role: "L2",
     shift: "Evening",
     manager: "Anmol",
+    joiningDate: "2023-01-20",
   },
   {
     name: "Nikita",
@@ -69,6 +78,7 @@ export const data = [
     role: "L1",
     shift: "Morning",
     manager: "Imtiyaz",
+    joiningDate: "2023-06-28",
   },
   {
     name: "Mashnu",
@@ -76,6 +86,7 @@ export const data = [
     role: "L2",
     shift: "Evening",
     manager: "Anmol",
+    joiningDate: "2023-05-05",
   },
   {
     name: "Aditya",
@@ -83,6 +94,7 @@ export const data = [
     role: "L1",
     shift: "Morning",
     manager: "Imtiyaz",
+    joiningDate: "2023-08-02",
   },
   {
     name: "Archie",
@@ -90,6 +102,7 @@ export const data = [
     role: "L1",
     shift: "Evening",
     manager: "Anmol",
+    joiningDate: "2023-07-22",
   },
   {
     name: "Monik",
@@ -97,6 +110,7 @@ export const data = [
     role: "L1",
     shift: "Morning",
     manager: "Imtiyaz",
+    joiningDate: "2023-05-18",
   },
   {
     name: "Neha",
@@ -104,6 +118,7 @@ export const data = [
     role: "L1",
     shift: "Evening",
     manager: "Anmol",
+    joiningDate: "2023-03-30",
   },
   {
     name: "Samarth",
@@ -111,6 +126,7 @@ export const data = [
     role: "L1",
     shift: "Morning",
     manager: "Imtiyaz",
+    joiningDate: "2023-04-08",
   },
   {
     name: "Shubhankar",
@@ -118,6 +134,7 @@ export const data = [
     role: "L1",
     shift: "Evening",
     manager: "Anmol",
+    joiningDate: "2023-02-14",
   },
   {
     name: "Simran",
@@ -125,6 +142,7 @@ export const data = [
     role: "L1",
     shift: "Night",
     manager: "Imtiyaz",
+    joiningDate: "2023-01-10",
   },
   {
     name: "Shreya",
@@ -132,6 +150,7 @@ export const data = [
     role: "L1",
     shift: "Evening",
     manager: "Anmol",
+    joiningDate: "2023-08-16",
   },
   {
     name: "Tamanna",
@@ -139,6 +158,7 @@ export const data = [
     role: "L1",
     shift: "Morning",
     manager: "Imtiyaz",
+    joiningDate: "2023-09-01",
   },
   {
     name: "Adish",
@@ -146,6 +166,7 @@ export const data = [
     role: "L1",
     shift: "Night",
     manager: "Anmol",
+    joiningDate: "2023-02-05",
   },
   {
     name: "Debashish",
@@ -153,6 +174,7 @@ export const data = [
     role: "L1",
     shift: "Morning",
     manager: "Imtiyaz",
+    joiningDate: "2023-06-10",
   },
   {
     name: "Shweta",
@@ -160,5 +182,6 @@ export const data = [
     role: "L1",
     shift: "Evening",
     manager: "Anmol",
+    joiningDate: "2023-04-24",
   },
 ];

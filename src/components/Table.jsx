@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import MonthSelector from './MonthSelector';
 import { data as initialData } from './data';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for react-toastify
+import axios from 'axios';
 
 // Shift details mapping with emojis
 const shiftDetails = {
@@ -10,41 +13,35 @@ const shiftDetails = {
     "Night": { name: 'Night', time: '10 PM - 7 AM', emoji: '🌙' },
 };
 
-// Function to get a random shift
-const getRandomShift = () => {
-    const shifts = Object.keys(shiftDetails);
-    return shifts[Math.floor(Math.random() * shifts.length)];
-};
+
 
 const Table = () => {
     const [shiftData, setShiftData] = useState(initialData);
 
-    // Initialize shifts only once on component mount
-    useEffect(() => {
-        // Optionally, you could fetch initial data or perform other setup here
-    }, []);
-
+    // Determine shifts based on the latest joining dates for each manager's team
     const determineShifts = () => {
-        // Shift mapping for rotation
-        const shiftMapping = {
-            "Morning": "Afternoon",
-            "Afternoon": "Evening",
-            "Evening": "Night",
-            "Night": "Morning"
-        };
+        toast.success("Shifts generated successfully!");
 
+        // Separate data by manager
+        const anmolTeam = shiftData.filter(item => item.manager === "Anmol" && item.shift !== "Night");
+        const imtiyazTeam = shiftData.filter(item => item.manager === "Imtiyaz" && item.shift !== "Night");
+
+        // Sort by joining date (newest first)
+        anmolTeam.sort((a, b) => new Date(b.joiningDate) - new Date(a.joiningDate));
+        imtiyazTeam.sort((a, b) => new Date(b.joiningDate) - new Date(a.joiningDate));
+
+        // Get the newest member from each team
+        const anmolNightShift = anmolTeam.length ? anmolTeam[0] : null;
+        const imtiyazNightShift = imtiyazTeam.length ? imtiyazTeam[0] : null;
+
+        // Update shifts
         const newShiftData = shiftData.map(item => {
-            let newShift = item.shift;
-
-            // Rotate shifts if the role is L1
-            if (item.role === 'L1') {
-                newShift = shiftMapping[item.shift] || item.shift;
-            } else if (item.role === 'L2') {
-                // Assign a random shift to L2 employees
-                newShift = getRandomShift();
+            if (anmolNightShift && item.email === anmolNightShift.email) {
+                return { ...item, shift: "Night" };
+            } else if (imtiyazNightShift && item.email === imtiyazNightShift.email) {
+                return { ...item, shift: "Night" };
             }
-
-            return { ...item, shift: newShift };
+            return item;
         });
 
         setShiftData(newShiftData);
@@ -69,7 +66,8 @@ const Table = () => {
                                     <th className="px-4 py-3">Role</th>
                                     <th className="px-4 py-3">Shift Details</th>
                                     <th className="px-4 py-3">Email</th>
-                                    <th className="px-4 py-3">Manager</th> {/* New Manager Column */}
+                                    <th className="px-4 py-3">Manager</th>
+                                    <th className="px-4 py-3">Joining Date</th> {/* Joining Date Column */}
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
@@ -98,7 +96,8 @@ const Table = () => {
                                             </span>
                                         </td>
                                         <td className="px-4 py-3 text-sm border">{item.email}</td>
-                                        <td className="px-4 py-3 text-sm border">{item.manager}</td> {/* New Manager Cell */}
+                                        <td className="px-4 py-3 text-sm border">{item.manager}</td>
+                                        <td className="px-4 py-3 text-sm border">{item.joiningDate}</td> {/* Display Joining Date */}
                                     </tr>
                                 ))}
                             </tbody>
@@ -117,7 +116,8 @@ const Table = () => {
                                     <th className="px-4 py-3">Role</th>
                                     <th className="px-4 py-3">Shift Details</th>
                                     <th className="px-4 py-3">Email</th>
-                                    <th className="px-4 py-3">Manager</th> {/* New Manager Column */}
+                                    <th className="px-4 py-3">Manager</th>
+                                    <th className="px-4 py-3">Joining Date</th> {/* Joining Date Column */}
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
@@ -146,7 +146,8 @@ const Table = () => {
                                             </span>
                                         </td>
                                         <td className="px-4 py-3 text-sm border">{item.email}</td>
-                                        <td className="px-4 py-3 text-sm border">{item.manager}</td> {/* New Manager Cell */}
+                                        <td className="px-4 py-3 text-sm border">{item.manager}</td>
+                                        <td className="px-4 py-3 text-sm border">{item.joiningDate}</td> {/* Display Joining Date */}
                                     </tr>
                                 ))}
                             </tbody>
@@ -162,6 +163,7 @@ const Table = () => {
                     Generate Shift for the Next Month
                 </button>
             </section>
+            <ToastContainer />
         </div>
     );
 };
