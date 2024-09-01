@@ -69,6 +69,7 @@ const Table = () => {
                                     <th className="px-4 py-3">Role</th>
                                     <th className="px-4 py-3">Shift Details</th>
                                     <th className="px-4 py-3">Email</th>
+                                    <th className="px-4 py-3">Manager</th> {/* New Manager Column */}
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
@@ -97,6 +98,7 @@ const Table = () => {
                                             </span>
                                         </td>
                                         <td className="px-4 py-3 text-sm border">{item.email}</td>
+                                        <td className="px-4 py-3 text-sm border">{item.manager}</td> {/* New Manager Cell */}
                                     </tr>
                                 ))}
                             </tbody>
@@ -115,6 +117,7 @@ const Table = () => {
                                     <th className="px-4 py-3">Role</th>
                                     <th className="px-4 py-3">Shift Details</th>
                                     <th className="px-4 py-3">Email</th>
+                                    <th className="px-4 py-3">Manager</th> {/* New Manager Column */}
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
@@ -143,6 +146,7 @@ const Table = () => {
                                             </span>
                                         </td>
                                         <td className="px-4 py-3 text-sm border">{item.email}</td>
+                                        <td className="px-4 py-3 text-sm border">{item.manager}</td> {/* New Manager Cell */}
                                     </tr>
                                 ))}
                             </tbody>
