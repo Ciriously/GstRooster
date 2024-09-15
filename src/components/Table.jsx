@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import MonthSelector from './MonthSelector';
-import { data as initialData } from './data';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for react-toastify
 import axios from 'axios';
@@ -13,10 +12,26 @@ const shiftDetails = {
     "Night": { name: 'Night', time: '10 PM - 7 AM', emoji: '🌙' },
 };
 
-
-
 const Table = () => {
-    const [shiftData, setShiftData] = useState(initialData);
+    // State to store shift data fetched from the API
+    const [shiftData, setShiftData] = useState([]);
+    const [loading, setLoading] = useState(true); // Loading state
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:3000/get-emp")
+            .then((response) => {
+                console.log("API Response Data:", response.data); // Log the data
+                setShiftData(response.data); // Set the shift data with API response
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log("Error fetching employee data:", error);
+                toast.error("Failed to fetch employee data!");
+                setLoading(false); // Set loading to false even if there's an error
+            });
+    }, []);
+
 
     // Determine shifts based on the latest joining dates for each manager's team
     const determineShifts = () => {
@@ -67,39 +82,45 @@ const Table = () => {
                                     <th className="px-4 py-3">Shift Details</th>
                                     <th className="px-4 py-3">Email</th>
                                     <th className="px-4 py-3">Manager</th>
-                                    <th className="px-4 py-3">Joining Date</th> {/* Joining Date Column */}
+                                    <th className="px-4 py-3">Joining Date</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
-                                {l1Data.map((item, index) => (
-                                    <tr key={index} className="text-gray-700">
-                                        <td className="px-4 py-3 border">
-                                            <div className="flex items-center text-sm">
-                                                <div>
-                                                    <p className="font-semibold text-black">{item.name}</p>
+                                {l1Data.length ? (
+                                    l1Data.map((item, index) => (
+                                        <tr key={index} className="text-gray-700">
+                                            <td className="px-4 py-3 border">
+                                                <div className="flex items-center text-sm">
+                                                    <div>
+                                                        <p className="font-semibold text-black">{item.name}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-3 text-md font-semibold border">{item.role}</td>
-                                        <td className="px-4 py-3 text-xs border">
-                                            <span
-                                                className={`px-2 py-1 font-semibold leading-tight rounded-sm ${item.shift === "Morning"
-                                                    ? 'text-green-700 bg-green-100'
-                                                    : item.shift === "Afternoon"
-                                                        ? 'text-orange-700 bg-gray-100'
-                                                        : item.shift === "Evening"
-                                                            ? 'text-red-700 bg-red-100'
-                                                            : 'text-blue-700 bg-blue-100'
-                                                    }`}
-                                            >
-                                                {shiftDetails[item.shift].emoji} {shiftDetails[item.shift].name} ({shiftDetails[item.shift].time})
-                                            </span>
-                                        </td>
-                                        <td className="px-4 py-3 text-sm border">{item.email}</td>
-                                        <td className="px-4 py-3 text-sm border">{item.manager}</td>
-                                        <td className="px-4 py-3 text-sm border">{item.joiningDate}</td> {/* Display Joining Date */}
+                                            </td>
+                                            <td className="px-4 py-3 text-md font-semibold border">{item.role}</td>
+                                            <td className="px-4 py-3 text-xs border">
+                                                <span
+                                                    className={`px-2 py-1 font-semibold leading-tight rounded-sm ${item.shift === "Morning"
+                                                        ? 'text-green-700 bg-green-100'
+                                                        : item.shift === "Afternoon"
+                                                            ? 'text-orange-700 bg-gray-100'
+                                                            : item.shift === "Evening"
+                                                                ? 'text-red-700 bg-red-100'
+                                                                : 'text-blue-700 bg-blue-100'
+                                                        }`}
+                                                >
+                                                    {shiftDetails[item.shift].emoji} {shiftDetails[item.shift].name} ({shiftDetails[item.shift].time})
+                                                </span>
+                                            </td>
+                                            <td className="px-4 py-3 text-sm border">{item.email}</td>
+                                            <td className="px-4 py-3 text-sm border">{item.manager}</td>
+                                            <td className="px-4 py-3 text-sm border">{new Date(item.joiningDate).toLocaleDateString()}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="6" className="text-center px-4 py-3">No L1 Employees Available</td>
                                     </tr>
-                                ))}
+                                )}
                             </tbody>
                         </table>
                     </div>
@@ -117,51 +138,49 @@ const Table = () => {
                                     <th className="px-4 py-3">Shift Details</th>
                                     <th className="px-4 py-3">Email</th>
                                     <th className="px-4 py-3">Manager</th>
-                                    <th className="px-4 py-3">Joining Date</th> {/* Joining Date Column */}
+                                    <th className="px-4 py-3">Joining Date</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
-                                {l2Data.map((item, index) => (
-                                    <tr key={index} className="text-gray-700">
-                                        <td className="px-4 py-3 border">
-                                            <div className="flex items-center text-sm">
-                                                <div>
-                                                    <p className="font-semibold text-black">{item.name}</p>
+                                {l2Data.length ? (
+                                    l2Data.map((item, index) => (
+                                        <tr key={index} className="text-gray-700">
+                                            <td className="px-4 py-3 border">
+                                                <div className="flex items-center text-sm">
+                                                    <div>
+                                                        <p className="font-semibold text-black">{item.name}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-3 text-md font-semibold border">{item.role}</td>
-                                        <td className="px-4 py-3 text-xs border">
-                                            <span
-                                                className={`px-2 py-1 font-semibold leading-tight rounded-sm ${item.shift === "Morning"
-                                                    ? 'text-green-700 bg-green-100'
-                                                    : item.shift === "Afternoon"
-                                                        ? 'text-orange-700 bg-gray-100'
-                                                        : item.shift === "Evening"
-                                                            ? 'text-red-700 bg-red-100'
-                                                            : 'text-blue-700 bg-blue-100'
-                                                    }`}
-                                            >
-                                                {shiftDetails[item.shift].emoji} {shiftDetails[item.shift].name} ({shiftDetails[item.shift].time})
-                                            </span>
-                                        </td>
-                                        <td className="px-4 py-3 text-sm border">{item.email}</td>
-                                        <td className="px-4 py-3 text-sm border">{item.manager}</td>
-                                        <td className="px-4 py-3 text-sm border">{item.joiningDate}</td> {/* Display Joining Date */}
+                                            </td>
+                                            <td className="px-4 py-3 text-md font-semibold border">{item.role}</td>
+                                            <td className="px-4 py-3 text-xs border">
+                                                <span
+                                                    className={`px-2 py-1 font-semibold leading-tight rounded-sm ${item.shift === "Morning"
+                                                        ? 'text-green-700 bg-green-100'
+                                                        : item.shift === "Afternoon"
+                                                            ? 'text-orange-700 bg-gray-100'
+                                                            : item.shift === "Evening"
+                                                                ? 'text-red-700 bg-red-100'
+                                                                : 'text-blue-700 bg-blue-100'
+                                                        }`}
+                                                >
+                                                    {shiftDetails[item.shift].emoji} {shiftDetails[item.shift].name} ({shiftDetails[item.shift].time})
+                                                </span>
+                                            </td>
+                                            <td className="px-4 py-3 text-sm border">{item.email}</td>
+                                            <td className="px-4 py-3 text-sm border">{item.manager}</td>
+                                            <td className="px-4 py-3 text-sm border">{new Date(item.joiningDate).toLocaleDateString()}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="6" className="text-center px-4 py-3">No L2 Employees Available</td>
                                     </tr>
-                                ))}
+                                )}
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-                <button
-                    className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none block w-full"
-                    type="button"
-                    onClick={determineShifts}
-                >
-                    Generate Shift for the Next Month
-                </button>
             </section>
             <ToastContainer />
         </div>
