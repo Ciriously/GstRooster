@@ -36,15 +36,23 @@ const FilterBar = () => {
 
     return (
         <div className="container mx-auto p-6 font-mono">
-            <div className="flex flex-wrap gap-4 mb-6">
+            <div className="mb-6">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">
+                    Shift and Employee Filters
+                </h1>
+                <p className="text-gray-600">Use the filters below to refine the displayed data.</p>
+            </div>
+
+            {/* Filter Inputs */}
+            <div className="flex flex-wrap gap-6 mb-6 items-start">
                 {/* Shift Filter */}
-                <div className="flex items-center">
-                    <label htmlFor="shift-select" className="mr-2 font-semibold">Shift:</label>
+                <div className="flex flex-col">
+                    <label htmlFor="shift-select" className="mb-1 font-medium text-gray-700">Shift</label>
                     <select
                         id="shift-select"
                         value={selectedShift}
                         onChange={handleShiftChange}
-                        className="border border-gray-300 rounded p-2"
+                        className="border border-gray-300 rounded-md p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                         <option value="">All</option>
                         {shifts.map((shift) => (
@@ -56,13 +64,13 @@ const FilterBar = () => {
                 </div>
 
                 {/* Month Filter */}
-                <div className="flex items-center">
-                    <label htmlFor="month-select" className="mr-2 font-semibold">Month:</label>
+                <div className="flex flex-col">
+                    <label htmlFor="month-select" className="mb-1 font-medium text-gray-700">Month</label>
                     <select
                         id="month-select"
                         value={selectedMonth}
                         onChange={handleMonthChange}
-                        className="border border-gray-300 rounded p-2"
+                        className="border border-gray-300 rounded-md p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                         {Array.from({ length: 12 }, (_, index) => (
                             <option key={index} value={index}>
@@ -73,13 +81,13 @@ const FilterBar = () => {
                 </div>
 
                 {/* Name Filter */}
-                <div className="flex items-center">
-                    <label htmlFor="name-select" className="mr-2 font-semibold">Name:</label>
+                <div className="flex flex-col">
+                    <label htmlFor="name-select" className="mb-1 font-medium text-gray-700">Name</label>
                     <select
                         id="name-select"
                         value={selectedName}
                         onChange={handleNameChange}
-                        className="border border-gray-300 rounded p-2"
+                        className="border border-gray-300 rounded-md p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                         <option value="">All</option>
                         {names.map((name) => (
@@ -91,13 +99,13 @@ const FilterBar = () => {
                 </div>
 
                 {/* Position Filter */}
-                <div className="flex items-center">
-                    <label htmlFor="position-select" className="mr-2 font-semibold">Position:</label>
+                <div className="flex flex-col">
+                    <label htmlFor="position-select" className="mb-1 font-medium text-gray-700">Position</label>
                     <select
                         id="position-select"
                         value={selectedPosition}
                         onChange={handlePositionChange}
-                        className="border border-gray-300 rounded p-2"
+                        className="border border-gray-300 rounded-md p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                         <option value="">All</option>
                         {positions.map((position) => (
@@ -108,13 +116,15 @@ const FilterBar = () => {
                     </select>
                 </div>
             </div>
+
+            {/* Displaying Filtered Data */}
             <div>
-                <h2 className="text-lg font-semibold">
-                    Displaying Data for {new Date(selectedMonth).toLocaleString('default', { month: 'long' })} with filters:
+                <h2 className="text-lg font-semibold text-gray-800 mb-2">
+                    Displaying Data for {new Date(selectedMonth).toLocaleString('default', { month: 'long' })}
                 </h2>
-                <p>Shift: {selectedShift ? shifts.find(s => s.id === parseInt(selectedShift)).name : 'All'}</p>
-                <p>Name: {selectedName || 'All'}</p>
-                <p>Position: {selectedPosition || 'All'}</p>
+                <p className="text-gray-700">Shift: {selectedShift ? shifts.find(s => s.id === parseInt(selectedShift)).name : 'All'}</p>
+                <p className="text-gray-700">Name: {selectedName || 'All'}</p>
+                <p className="text-gray-700">Position: {selectedPosition || 'All'}</p>
             </div>
         </div>
     );

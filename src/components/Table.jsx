@@ -3,13 +3,14 @@ import MonthSelector from './MonthSelector';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for react-toastify
 import axios from 'axios';
+import FilterBar from './FilterBar';
 
 // Shift details mapping with emojis
 const shiftDetails = {
-    "Morning": { name: 'Morning', time: '7 AM - 4 PM', emoji: '🌅' },
-    "Afternoon": { name: 'Afternoon', time: '10 AM - 7 PM', emoji: '🌞' },
-    "Evening": { name: 'Evening', time: '1 PM - 10 PM', emoji: '🌇' },
-    "Night": { name: 'Night', time: '10 PM - 7 AM', emoji: '🌙' },
+    "Shift 1": { name: 'Shift 1', time: '7 AM - 4 PM', emoji: '🌅' },
+    "Shift 2": { name: 'Shift 2', time: '10 AM - 7 PM', emoji: '🌞' },
+    "Shift 3": { name: 'Shift 3', time: '1 PM - 10 PM', emoji: '🌇' },
+    "Shift 4": { name: 'Shift 4', time: '10 PM - 7 AM', emoji: '🌙' },
 };
 
 const Table = () => {
@@ -38,8 +39,8 @@ const Table = () => {
         toast.success("Shifts generated successfully!");
 
         // Separate data by manager
-        const anmolTeam = shiftData.filter(item => item.manager === "Anmol" && item.shift !== "Night");
-        const imtiyazTeam = shiftData.filter(item => item.manager === "Imtiyaz" && item.shift !== "Night");
+        const anmolTeam = shiftData.filter(item => item.manager === "Anmol" && item.shift !== "Shift 4");
+        const imtiyazTeam = shiftData.filter(item => item.manager === "Imtiyaz" && item.shift !== "Shift 4");
 
         // Sort by joining date (newest first)
         anmolTeam.sort((a, b) => new Date(b.joiningDate) - new Date(a.joiningDate));
@@ -52,9 +53,9 @@ const Table = () => {
         // Update shifts
         const newShiftData = shiftData.map(item => {
             if (anmolNightShift && item.email === anmolNightShift.email) {
-                return { ...item, shift: "Night" };
+                return { ...item, shift: "Shift 4" };
             } else if (imtiyazNightShift && item.email === imtiyazNightShift.email) {
-                return { ...item, shift: "Night" };
+                return { ...item, shift: "Shift 4" };
             }
             return item;
         });
@@ -69,6 +70,7 @@ const Table = () => {
     return (
         <div>
             <MonthSelector />
+            {/* <FilterBar /> */}
             <section className="container mx-auto p-6 font-mono">
                 {/* L1 Table */}
                 <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
@@ -82,7 +84,6 @@ const Table = () => {
                                     <th className="px-4 py-3">Shift Details</th>
                                     <th className="px-4 py-3">Email</th>
                                     <th className="px-4 py-3">Manager</th>
-                                    <th className="px-4 py-3">Joining Date</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
@@ -99,11 +100,11 @@ const Table = () => {
                                             <td className="px-4 py-3 text-md font-semibold border">{item.role}</td>
                                             <td className="px-4 py-3 text-xs border">
                                                 <span
-                                                    className={`px-2 py-1 font-semibold leading-tight rounded-sm ${item.shift === "Morning"
+                                                    className={`px-2 py-1 font-semibold leading-tight rounded-sm ${item.shift === "Shift 1"
                                                         ? 'text-green-700 bg-green-100'
-                                                        : item.shift === "Afternoon"
+                                                        : item.shift === "Shift 2"
                                                             ? 'text-orange-700 bg-gray-100'
-                                                            : item.shift === "Evening"
+                                                            : item.shift === "Shift 3"
                                                                 ? 'text-red-700 bg-red-100'
                                                                 : 'text-blue-700 bg-blue-100'
                                                         }`}
@@ -113,12 +114,11 @@ const Table = () => {
                                             </td>
                                             <td className="px-4 py-3 text-sm border">{item.email}</td>
                                             <td className="px-4 py-3 text-sm border">{item.manager}</td>
-                                            <td className="px-4 py-3 text-sm border">{new Date(item.joiningDate).toLocaleDateString()}</td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="6" className="text-center px-4 py-3">No L1 Employees Available</td>
+                                        <td colSpan="5" className="text-center px-4 py-3">No L1 Employees Available</td>
                                     </tr>
                                 )}
                             </tbody>
@@ -138,7 +138,6 @@ const Table = () => {
                                     <th className="px-4 py-3">Shift Details</th>
                                     <th className="px-4 py-3">Email</th>
                                     <th className="px-4 py-3">Manager</th>
-                                    <th className="px-4 py-3">Joining Date</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
@@ -155,11 +154,11 @@ const Table = () => {
                                             <td className="px-4 py-3 text-md font-semibold border">{item.role}</td>
                                             <td className="px-4 py-3 text-xs border">
                                                 <span
-                                                    className={`px-2 py-1 font-semibold leading-tight rounded-sm ${item.shift === "Morning"
+                                                    className={`px-2 py-1 font-semibold leading-tight rounded-sm ${item.shift === "Shift 1"
                                                         ? 'text-green-700 bg-green-100'
-                                                        : item.shift === "Afternoon"
+                                                        : item.shift === "Shift 2"
                                                             ? 'text-orange-700 bg-gray-100'
-                                                            : item.shift === "Evening"
+                                                            : item.shift === "Shift 3"
                                                                 ? 'text-red-700 bg-red-100'
                                                                 : 'text-blue-700 bg-blue-100'
                                                         }`}
@@ -169,12 +168,11 @@ const Table = () => {
                                             </td>
                                             <td className="px-4 py-3 text-sm border">{item.email}</td>
                                             <td className="px-4 py-3 text-sm border">{item.manager}</td>
-                                            <td className="px-4 py-3 text-sm border">{new Date(item.joiningDate).toLocaleDateString()}</td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="6" className="text-center px-4 py-3">No L2 Employees Available</td>
+                                        <td colSpan="5" className="text-center px-4 py-3">No L2 Employees Available</td>
                                     </tr>
                                 )}
                             </tbody>

@@ -19,15 +19,22 @@ const MonthSelector = () => {
 
     return (
         <div className="container mx-auto p-6 font-mono">
-            <h1 className="text-xl font-bold mb-4">Displaying Rooster Shift for the Month of {months[currentMonthIndex]}</h1>
+            {/* Heading */}
+            <div className="mb-6">
+                <h1 className="text-2xl font-bold text-gray-800 mb-2">
+                    Rooster Shift for {months[currentMonthIndex]}
+                </h1>
+                <p className="text-gray-600">Select a month to view the shift schedule.</p>
+            </div>
 
-            <div className="mb-4">
-                <label htmlFor="month-select" className="mr-2 font-semibold">Select Month:</label>
+            {/* Month Selector */}
+            <div className="flex flex-col items-start space-y-2">
+                <label htmlFor="month-select" className="font-medium text-gray-700">Select Month:</label>
                 <select
                     id="month-select"
                     value={selectedMonth}
                     onChange={handleMonthChange}
-                    className="border border-gray-300 rounded p-2"
+                    className="border border-gray-300 rounded-md p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                     {months.map((month, index) => (
                         <option key={index} value={index}>
@@ -37,9 +44,12 @@ const MonthSelector = () => {
                 </select>
             </div>
 
-            <h2 className="text-lg font-semibold">
-                Displaying Data for the Month of {months[selectedMonth]}
-            </h2>
+            {/* Selected Month Display */}
+            <div className="mt-4">
+                <h2 className="text-xl font-semibold text-gray-800">
+                    Displaying Data for {months[selectedMonth]}
+                </h2>
+            </div>
         </div>
     );
 };
