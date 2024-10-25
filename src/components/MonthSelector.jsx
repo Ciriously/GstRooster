@@ -6,7 +6,7 @@ const months = [
     'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-const MonthSelector = () => {
+const MonthSelector = ({ onMonthChange }) => {
     // Get the current month index (0-based)
     const currentMonthIndex = new Date().getMonth();
     // State to hold the selected month
@@ -14,15 +14,20 @@ const MonthSelector = () => {
 
     // Handle month selection change
     const handleMonthChange = (event) => {
-        setSelectedMonth(parseInt(event.target.value, 10));
+        const newMonth = parseInt(event.target.value, 10);
+        setSelectedMonth(newMonth);
+        onMonthChange(newMonth); // Notify the parent component (Table) of the month change
     };
+
+    // Only display current and future months
+    const availableMonths = months.slice(currentMonthIndex);
 
     return (
         <div className="container mx-auto p-6 font-mono">
             {/* Heading */}
             <div className="mb-6">
                 <h1 className="text-2xl font-bold text-gray-800 mb-2">
-                    Rooster Shift for {months[currentMonthIndex]}
+                    Rooster Shift for {months[selectedMonth]}
                 </h1>
                 <p className="text-gray-600">Select a month to view the shift schedule.</p>
             </div>
@@ -36,19 +41,12 @@ const MonthSelector = () => {
                     onChange={handleMonthChange}
                     className="border border-gray-300 rounded-md p-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
-                    {months.map((month, index) => (
-                        <option key={index} value={index}>
+                    {availableMonths.map((month, index) => (
+                        <option key={index} value={currentMonthIndex + index}>
                             {month}
                         </option>
                     ))}
                 </select>
-            </div>
-
-            {/* Selected Month Display */}
-            <div className="mt-4">
-                <h2 className="text-xl font-semibold text-gray-800">
-                    Displaying Data for {months[selectedMonth]}
-                </h2>
             </div>
         </div>
     );
