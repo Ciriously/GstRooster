@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 
+
 // Array of months for the dropdown
 const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
+
 const MonthSelector = ({ onMonthChange }) => {
     // Get the current month index (0-based)
     const currentMonthIndex = new Date().getMonth();
     // State to hold the selected month
     const [selectedMonth, setSelectedMonth] = useState(currentMonthIndex);
+
 
     // Handle month selection change
     const handleMonthChange = (event) => {
@@ -19,8 +22,10 @@ const MonthSelector = ({ onMonthChange }) => {
         onMonthChange(newMonth); // Notify the parent component (Table) of the month change
     };
 
+
     // Only display current and future months
     const availableMonths = months.slice(currentMonthIndex);
+
 
     return (
         <div className="container mx-auto p-6 font-mono">
@@ -31,6 +36,7 @@ const MonthSelector = ({ onMonthChange }) => {
                 </h1>
                 <p className="text-gray-600">Select a month to view the shift schedule.</p>
             </div>
+
 
             {/* Month Selector */}
             <div className="flex flex-col items-start space-y-2">
@@ -51,5 +57,6 @@ const MonthSelector = ({ onMonthChange }) => {
         </div>
     );
 };
+
 
 export default MonthSelector;
