@@ -1,21 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Header from './shared/Header'
-import Table from './components/Table'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './shared/Header';
+import Table from './components/Table';
+import WeeklyRoster from './Pages/WeeklyRooster';
+import './App.css';
 
 function App() {
-
   return (
-    <div>
-      <div className='mb-20'>
+    <Router>
+      <div className="mb-20">
         <Header />
       </div>
-
-      <Table />
-    </div>
-  )
+      <Routes>
+        <Route path="/" element={<Table />} />
+        <Route path="/weekly-roster" element={<WeeklyRoster />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
